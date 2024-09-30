@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Image with Watermark</title>
+</head>
+<body>
+    <h1>Upload an Image and Add Watermark</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" required><br><br>
+
+        <label for="watermark_text">Watermark Text:</label>
+        <input type="text" id="watermark_text" name="watermark_text" required><br><br>
+
+        <label>Select Watermark Position:</label><br>
+        <input type="radio" id="top" name="position" value="top" required>
+        <label for="top">Top</label><br>
+
+        <input type="radio" id="bottom" name="position" value="bottom" required>
+        <label for="bottom">Bottom</label><br>
+
+        <input type="radio" id="diagonal" name="position" value="diagonal" required>
+        <label for="diagonal">Diagonal</label><br><br>
+
+        <label>Select Alignment (for top or bottom):</label><br>
+        <input type="radio" id="left" name="align" value="left">
+        <label for="left">Left</label><br>
+
+        <input type="radio" id="right" name="align" value="right">
+        <label for="right">Right</label><br><br>
+
+        <input type="submit" value="Add Watermark">
+    </form>
+
+    <!-- แสดงรูปที่มีลายน้ำ -->
+    {% if filename %}
+    <h2>Image with Watermark:</h2>
+    <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Image with Watermark" width="300">
+    {% endif %}
+    
+    <!-- แสดงข้อความแจ้งเตือนหากมี -->
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %}
+</body>
+</html>
