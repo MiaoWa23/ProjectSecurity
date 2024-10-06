@@ -3,46 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Image with Watermark</title>
+    <title>Add Watermark</title>
+    <script>
+        function updateAlignmentOptions() {
+            var position = document.querySelector('input[name="position"]:checked') ? document.querySelector('input[name="position"]:checked').value : null;
+            var alignmentTop = document.getElementById('alignment-top');
+            var alignmentBottom = document.getElementById('alignment-bottom');
+
+            // ซ่อนตัวเลือกการจัดวางทั้งหมดก่อน
+            alignmentTop.style.display = 'none';
+            alignmentBottom.style.display = 'none';
+
+            // ถ้าเลือก Top ให้แสดงตัวเลือก "Left" และ "Right" ระหว่าง Top และ Bottom
+            if (position === 'top') {
+                alignmentTop.style.display = 'block';
+            }
+
+            // ถ้าเลือก Bottom ให้แสดงตัวเลือก "Left" และ "Right" ระหว่าง Bottom และ Diagonal
+            if (position === 'bottom') {
+                alignmentBottom.style.display = 'block';
+            }
+        }
+
+        window.onload = function() {
+            // เรียกใช้งานฟังก์ชัน updateAlignmentOptions เมื่อโหลดหน้า
+            updateAlignmentOptions();
+            
+            // ถ้าแสดงภาพเรียบร้อยแล้ว ให้เคลียร์ฟอร์ม
+            if (document.getElementById("watermarked-image")) {
+                document.getElementById("watermark-form").reset();
+            }
+        }
+    </script>
 </head>
 <body>
-    <h1>Upload an Image and Add Watermark</h1>
+    <h1>Add Watermark</h1>
 
-    <form method="POST" enctype="multipart/form-data">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li style="color: red;">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form id="watermark-form" method="POST" enctype="multipart/form-data">
         <input type="file" name="file" required><br><br>
 
         <label for="watermark_text">Watermark Text:</label>
         <input type="text" id="watermark_text" name="watermark_text" required><br><br>
 
         <label>Select Watermark Position:</label><br>
-        <input type="radio" id="top" name="position" value="top" required>
-        <label for="top">Top</label><br>
 
-        <input type="radio" id="bottom" name="position" value="bottom" required>
-        <label for="bottom">Bottom</label><br>
+        <input type="radio" id="top" name="position" value="top" onclick="updateAlignmentOptions()" required>
+        <label for="top">Top</label>
 
-        <input type="radio" id="diagonal" name="position" value="diagonal" required>
-        <label for="diagonal">Diagonal</label><br><br>
+        <div id="alignment-top" style="display:none;">
+            &nbsp;&nbsp;<input type="radio" id="left" name="align" value="left">
+            <label for="left">Left</label>
+            &nbsp;&nbsp;<input type="radio" id="right" name="align" value="right">
+            <label for="right">Right</label>
+        </div><br>
 
-        <label>Select Alignment (for top or bottom):</label><br>
-        <input type="radio" id="left" name="align" value="left">
-        <label for="left">Left</label><br>
+        <input type="radio" id="bottom" name="position" value="bottom" onclick="updateAlignmentOptions()" required>
+        <label for="bottom">Bottom</label>
 
-        <input type="radio" id="right" name="align" value="right">
-        <label for="right">Right</label><br><br>
+        <div id="alignment-bottom" style="display:none;">
+            &nbsp;&nbsp;<input type="radio" id="left" name="align" value="left">
+            <label for="left">Left</label>
+            &nbsp;&nbsp;<input type="radio" id="right" name="align" value="right">
+            <label for="right">Right</label>
+        </div><br>
+
+        <input type="radio" id="diagonal" name="position" value="diagonal" onclick="updateAlignmentOptions()" required>
+        <label for="center">Center</label><br><br>
 
         <input type="submit" value="Add Watermark">
     </form>
 
-    <!-- แสดงรูปที่มีลายน้ำ -->
-    {% if filename %}
-    <h2>Image with Watermark:</h2>
-    <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Image with Watermark" width="300">
-    {% endif %}
+    {% with messages = get_flashed_messages() %}
+      {% if not messages %}
+        {% if filename %}
+          <h2>Image with Watermark:</h2>
+          <img id="watermarked-image" src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Image with Watermark" width="300"><br><br>
+
+          <!-- ปุ่มดาวน์โหลด -->
+          <a href="{{ url_for('static', filename='uploads/' + filename) }}" download="{{ filename }}">
+            <button>Download Image</button>
+          </a>
+
+          <script>
+              document.getElementById("watermark-form").reset();  // เคลียร์ฟอร์มเมื่อแสดงภาพ
+          </script>
+        {% endif %}
+      {% endif %}
+    {% endwith %}
     
-    <!-- แสดงข้อความแจ้งเตือนหากมี -->
-    {% if message %}
-    <p>{{ message }}</p>
-    {% endif %}
 </body>
 </html>
