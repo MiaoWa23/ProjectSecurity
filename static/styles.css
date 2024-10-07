@@ -1,0 +1,92 @@
+/* ใช้สีพาสเทลโทนอบอุ่นจากภาพ */
+body {
+    background-color: #FFF5E4;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: #FFE3E1;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 450px;
+}
+
+h1 {
+    font-size: 24px;
+    color: #FF9494;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+}
+
+.form-section {
+    margin-top: 20px;
+}
+
+label {
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="file"],
+input[type="text"],
+input[type="submit"] {
+    padding: 10px;
+    margin: 10px 0;
+    width: 100%;
+    border: 1px solid #FFD1D1;
+    border-radius: 5px;
+    box-sizing: border-box; /* ทำให้ padding และ border รวมอยู่ในขนาด */
+}
+
+
+
+input[type="radio"] {
+    margin-right: 5px;
+}
+
+.submit-btn {
+    background-color: #FF9494;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;  /* ปรับขนาดปุ่มให้กว้างเต็ม */
+    box-sizing: border-box;
+}
+
+.submit-btn:hover {
+    background-color: #FFD1D1;
+}
+
+.download-btn {
+    background-color: #FF9494;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.download-btn:hover {
+    background-color: #FFD1D1;
+}
+
+img {
+    border: 2px solid #FFD1D1;
+    border-radius: 10px;
+    margin-top: 20px;
+}

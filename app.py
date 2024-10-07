@@ -63,10 +63,10 @@ def upload_image():
             draw = ImageDraw.Draw(txt_layer)
             width, height = image.size
 
-            # คำนวณขนาดฟอนต์
-            font_size = int(width * 0.10)  # เริ่มต้นที่ 10% ของความกว้างของภาพ
+            # คำนวณขนาดฟอนต์ใหม่
+            font_size = int(width * 0.10)  # ลดขนาดฟอนต์จาก 10% ของความกว้างเป็น 7%
             try:
-                font = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Black.ttf", font_size)
+                font = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", font_size)
             except IOError:
                 font = ImageFont.load_default()
 
@@ -79,19 +79,20 @@ def upload_image():
             text_width = bbox[2] - bbox[0]
             text_height = bbox[3] - bbox[1]
 
-            # ตั้งค่าตำแหน่งของลายน้ำ
+            # ตั้งค่าตำแหน่งของลายน้ำพร้อมเว้นระยะขอบ
+            margin = 20  # เว้นระยะขอบ 20 พิกเซล
             if position == 'top':
-                y = 10
+                y = margin
                 if align == 'left':
-                    x = 10
+                    x = margin
                 else:
-                    x = width - text_width - 10
+                    x = width - text_width - margin
             elif position == 'bottom':
-                y = height - text_height - 10
+                y = height - text_height - margin
                 if align == 'left':
-                    x = 10
+                    x = margin
                 else:
-                    x = width - text_width - 10
+                    x = width - text_width - margin
             elif position == 'center':
                 x = (width - text_width) // 2
                 y = (height - text_height) // 2
@@ -116,6 +117,7 @@ def upload_image():
             return render_template('index.html', filename=filename, watermark_text=watermark_text, position=position, align=align)
 
     return render_template('index.html', filename=filename)
+
 
 
 if __name__ == '__main__':

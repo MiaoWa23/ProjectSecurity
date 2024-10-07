@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Watermark</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script>
         function updateAlignmentOptions() {
             var position = document.querySelector('input[name="position"]:checked') ? document.querySelector('input[name="position"]:checked').value : null;
@@ -37,69 +38,70 @@
     </script>
 </head>
 <body>
-    <h1>Add Watermark</h1>
+    <div class="container">
+        <h1>Add Watermark</h1>
 
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-          {% for message in messages %}
-            <li style="color: red;">{{ message }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+              {% for message in messages %}
+                <li class="error-message">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
 
-    <form id="watermark-form" method="POST" enctype="multipart/form-data">
-        <input type="file" name="file" required><br><br>
+        <form id="watermark-form" method="POST" enctype="multipart/form-data" class="form-section">
+            <input type="file" name="file" required><br><br>
 
-        <label for="watermark_text">Watermark Text:</label>
-        <input type="text" id="watermark_text" name="watermark_text" required><br><br>
+            <label for="watermark_text">Watermark Text:</label>
+            <input type="text" id="watermark_text" name="watermark_text" required><br><br>
 
-        <label>Select Watermark Position:</label><br>
+            <label>Select Watermark Position:</label><br>
+            <div class="radio-group">
+            <input type="radio" id="top" name="position" value="top" onclick="updateAlignmentOptions()" required>
+            <label for="top">Top</label>
 
-        <input type="radio" id="top" name="position" value="top" onclick="updateAlignmentOptions()" required>
-        <label for="top">Top</label>
+            <div id="alignment-top" style="display:none;">
+                &nbsp;&nbsp;<input type="radio" id="left" name="align" value="left">
+                <label for="left">Left</label>
+                &nbsp;&nbsp;<input type="radio" id="right" name="align" value="right">
+                <label for="right">Right</label>
+            </div><br>
 
-        <div id="alignment-top" style="display:none;">
-            &nbsp;&nbsp;<input type="radio" id="left" name="align" value="left">
-            <label for="left">Left</label>
-            &nbsp;&nbsp;<input type="radio" id="right" name="align" value="right">
-            <label for="right">Right</label>
-        </div><br>
+            <input type="radio" id="bottom" name="position" value="bottom" onclick="updateAlignmentOptions()" required>
+            <label for="bottom">Bottom</label>
 
-        <input type="radio" id="bottom" name="position" value="bottom" onclick="updateAlignmentOptions()" required>
-        <label for="bottom">Bottom</label>
+            <div id="alignment-bottom" style="display:none;">
+                &nbsp;&nbsp;<input type="radio" id="left" name="align" value="left">
+                <label for="left">Left</label>
+                &nbsp;&nbsp;<input type="radio" id="right" name="align" value="right">
+                <label for="right">Right</label>
+            </div><br>
 
-        <div id="alignment-bottom" style="display:none;">
-            &nbsp;&nbsp;<input type="radio" id="left" name="align" value="left">
-            <label for="left">Left</label>
-            &nbsp;&nbsp;<input type="radio" id="right" name="align" value="right">
-            <label for="right">Right</label>
-        </div><br>
+            <input type="radio" id="diagonal" name="position" value="diagonal" onclick="updateAlignmentOptions()" required>
+            <label for="center">Center</label><br><br>
+          </div>
+            <input type="submit" value="Add Watermark" class="submit-btn">
+        </form>
 
-        <input type="radio" id="diagonal" name="position" value="diagonal" onclick="updateAlignmentOptions()" required>
-        <label for="center">Center</label><br><br>
+        {% with messages = get_flashed_messages() %}
+          {% if not messages %}
+            {% if filename %}
+              <h2>Image with Watermark:</h2>
+              <img id="watermarked-image" src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Image with Watermark" width="300"><br><br>
 
-        <input type="submit" value="Add Watermark">
-    </form>
+              <!-- ปุ่มดาวน์โหลด -->
+              <a href="{{ url_for('static', filename='uploads/' + filename) }}" download="{{ filename }}">
+                <button class="download-btn">Download Image</button>
+              </a>
 
-    {% with messages = get_flashed_messages() %}
-      {% if not messages %}
-        {% if filename %}
-          <h2>Image with Watermark:</h2>
-          <img id="watermarked-image" src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Image with Watermark" width="300"><br><br>
-
-          <!-- ปุ่มดาวน์โหลด -->
-          <a href="{{ url_for('static', filename='uploads/' + filename) }}" download="{{ filename }}">
-            <button>Download Image</button>
-          </a>
-
-          <script>
-              document.getElementById("watermark-form").reset();  // เคลียร์ฟอร์มเมื่อแสดงภาพ
-          </script>
-        {% endif %}
-      {% endif %}
-    {% endwith %}
-    
+              <script>
+                  document.getElementById("watermark-form").reset();  // เคลียร์ฟอร์มเมื่อแสดงภาพ
+              </script>
+            {% endif %}
+          {% endif %}
+        {% endwith %}
+    </div>
 </body>
 </html>
