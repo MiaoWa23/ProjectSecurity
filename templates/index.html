@@ -20,7 +20,7 @@
                 alignmentTop.style.display = 'block';
             }
 
-            // ถ้าเลือก Bottom ให้แสดงตัวเลือก "Left" และ "Right" ระหว่าง Bottom และ Diagonal
+            // ถ้าเลือก Bottom ให้แสดงตัวเลือก "Left" และ "Right" ระหว่าง Bottom และ Center
             if (position === 'bottom') {
                 alignmentBottom.style.display = 'block';
             }
@@ -38,6 +38,9 @@
     </script>
 </head>
 <body>
+  <div class="back-containner">
+      <a href="{{ url_for('home') }}" class="back-button">&lt; Back</a>
+  </div>
     <div class="container">
         <h1>Add Watermark</h1>
 
@@ -97,7 +100,7 @@
               </a>
 
               <script>
-                  document.getElementById("watermark-form").reset();  // เคลียร์ฟอร์มเมื่อแสดงภาพ
+                  document.getElementById("watermark-form").reset();
               </script>
             {% endif %}
           {% endif %}

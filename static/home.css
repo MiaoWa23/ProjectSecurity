@@ -1,0 +1,49 @@
+/* ใช้สีพาสเทลตามรูปที่แนบ */
+body {
+    background-color: #FFF5E4;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+    /* background-color: #FFE3E1;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 50%; */
+}
+
+h1 {
+    color: #FF9494;
+    font-size: 64px;
+    margin-bottom: 75px;
+}
+
+.btn-group {
+    display: inline-flex; /* จัดปุ่มให้เรียงในแนวนอน */
+    gap: 40px; /* ระยะห่างระหว่างปุ่ม */
+}
+
+.btn {
+    padding: 15px 30px;
+    font-size: 18px;
+    border: 2px solid #FF9494;
+    background-color: #FFD1D1;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #333;
+    transition: background-color 0.3s, color 0.3s;
+    width: 250px;
+    height: 100px;
+}
+
+.btn:hover {
+    background-color: #FF9494;
+    color: white;
+}

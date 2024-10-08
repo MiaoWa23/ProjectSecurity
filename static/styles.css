@@ -1,4 +1,3 @@
-/* ใช้สีพาสเทลโทนอบอุ่นจากภาพ */
 body {
     background-color: #FFF5E4;
     font-family: 'Arial', sans-serif;
@@ -9,6 +8,26 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    flex-direction: column;
+    position: relative;
+}
+
+.back-containner {
+    position: absolute; /* จัดปุ่มให้อยู่มุมซ้ายของ body */
+    top: 20px; /* ระยะจากขอบบน */
+    left: 20px; /* ระยะจากขอบซ้าย */
+    width: auto; /* ปรับขนาดของ container ให้ตรงกับปุ่ม */
+}
+
+.back-button {
+    color: #FF9494;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.back-button:hover {
+    color: #FF5A5A;
 }
 
 .container {
@@ -18,7 +37,7 @@ body {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 600px;
-    margin-top: 10px;
+    margin-top: 60px;
     margin-bottom: 50px;
 }
 
@@ -41,7 +60,6 @@ label {
     color: #333;
 }
 
-input[type="file"],
 input[type="text"],
 input[type="submit"] {
     padding: 10px;
@@ -49,7 +67,14 @@ input[type="submit"] {
     width: 100%;
     border: 1px solid #FFD1D1;
     border-radius: 5px;
-    box-sizing: border-box; /* ทำให้ padding และ border รวมอยู่ในขนาด */
+    box-sizing: border-box;
+}
+input[type="file"]{
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #FFD1D1;
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 
 
@@ -65,7 +90,7 @@ input[type="radio"] {
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
-    width: 100%;  /* ปรับขนาดปุ่มให้กว้างเต็ม */
+    width: 100%;
     box-sizing: border-box;
 }
 

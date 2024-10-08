@@ -12,7 +12,11 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}  # กำหนดไฟล์นา
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
+def home():
+    return render_template('home.html')
+
+@app.route('/add', methods=['GET', 'POST'])
 def upload_image():
     filename = request.form.get('filename')  # รับค่าชื่อไฟล์หากถูกส่งกลับมาหลังจากเกิดข้อผิดพลาด
     file_path = None
@@ -118,6 +122,10 @@ def upload_image():
 
     return render_template('index.html', filename=filename)
 
+
+@app.route('/remove')
+def remove_watermark():
+    return render_template('remove.html')
 
 
 if __name__ == '__main__':
