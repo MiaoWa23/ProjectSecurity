@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Watermark</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        function updateAlignmentOptions() {
+            var position = document.querySelector('input[name="position"]:checked') ? document.querySelector('input[name="position"]:checked').value : null;
+            var alignmentOptions = document.getElementById('alignment-options');
+            
+
+            // ซ่อนตัวเลือกการจัดวางทั้งหมดก่อน
+            alignmentOptions.style.display = 'none';
+
+            // ถ้าเลือก Top หรือ Bottom ให้แสดงตัวเลือก "Left" และ "Right"
+            if (position === 'top' || position === 'bottom') {
+                alignmentOptions.style.display = 'block';
+            }
+        }
+
+        window.onload = function() {
+            // เรียกใช้งานฟังก์ชัน updateAlignmentOptions เมื่อโหลดหน้า
+            updateAlignmentOptions();
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Watermark</h1>
+
+        <!-- แสดงข้อความแจ้งเตือน (ถ้ามี) -->
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+              {% for message in messages %}
+                <li style="color: red;">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST" enctype="multipart/form-data">
+            <!-- อัปโหลดไฟล์รูปภาพ -->
+            <label for="file">Upload Image:</label>
+            {% if filename %}
+                <p>Uploaded file: {{ filename }}</p>
+                <input type="hidden" name="filename" value="{{ filename }}">
+            {% else %}
+                <input type="file" name="file" required><br><br>
+            {% endif %}
+
+            <!-- ข้อความลายน้ำ -->
+            <label for="watermark_text">Watermark Text:</label>
+            <input type="text" id="watermark_text" name="watermark_text" value="{{ watermark_text }}" required><br><br>
+
+            <!-- เลือกตำแหน่งลายน้ำ -->
+            <label>Select Watermark Position:</label><br>
+            <input type="radio" id="top" name="position" value="top" {% if position == 'top' %} checked {% endif %} onclick="updateAlignmentOptions()" required> Top
+            <input type="radio" id="bottom" name="position" value="bottom" {% if position == 'bottom' %} checked {% endif %} onclick="updateAlignmentOptions()" required> Bottom
+            <input type="radio" id="center" name="position" value="center" {% if position == 'center' %} checked {% endif %} onclick="updateAlignmentOptions()" required> Center<br><br>
+
+            <!-- ตัวเลือกซ้าย/ขวา -->
+            <div id="alignment-options" style="display:none;">
+                <label for="align">Select Alignment:</label><br>
+                <input type="radio" id="left" name="align" value="left" {% if align == 'left' %} checked {% endif %}> Left
+                <input type="radio" id="right" name="align" value="right" {% if align == 'right' %} checked {% endif %}> Right<br><br>
+            </div>
+
+            <input type="submit" value="Add Watermark" class="submit-btn">
+        </form>
+
+        <!-- แสดงภาพที่มีลายน้ำ (ถ้ามี) -->
+        {% if img_data %}
+            <h2>Image with Watermark:</h2>
+            <img src="data:image/jpeg;base64,{{ img_data }}" alt="Image with Watermark" width="300"><br><br>
+
+            <!-- ปุ่มดาวน์โหลดภาพ -->
+            <a href="data:image/jpeg;base64,{{ img_data }}" download="watermarked_image.jpg">
+                <button class="download-btn">Download Image</button>
+            </a>
+        {% endif %}
+    </div>
+</body>
+</html>

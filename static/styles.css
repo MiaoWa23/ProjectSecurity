@@ -1,5 +1,9 @@
 body {
     background-color: #FFF5E4;
+    background-image: url('/static/waveAdd.png');
+    background-size: cover;
+    background-position: center;
+
     font-family: 'Arial', sans-serif;
     color: #333;
     margin: 0;
@@ -13,37 +17,32 @@ body {
 }
 
 .back-containner {
-    position: absolute; /* จัดปุ่มให้อยู่มุมซ้ายของ body */
-    top: 20px; /* ระยะจากขอบบน */
-    left: 20px; /* ระยะจากขอบซ้าย */
-    width: auto; /* ปรับขนาดของ container ให้ตรงกับปุ่ม */
+    position: absolute; 
+    top: 20px; 
+    left: 20px; 
+    width: auto; 
 }
 
 .back-button {
-    color: #FF9494;
+    color: #295F98;
     text-decoration: none;
     font-size: 18px;
     font-weight: bold;
 }
 
-.back-button:hover {
-    color: #FF5A5A;
-}
-
 .container {
-    background-color: #FFE3E1;
+    background-color: #8EACCD;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 600px;
-    margin-top: 60px;
-    margin-bottom: 50px;
+    margin: auto;
 }
 
 h1 {
     font-size: 24px;
-    color: #FF9494;
+    color: #295F98;
 }
 
 .error-message {
@@ -65,41 +64,36 @@ input[type="submit"] {
     padding: 10px;
     margin: 10px 0;
     width: 100%;
-    border: 1px solid #FFD1D1;
+    border: 1px solid #295F98;
     border-radius: 5px;
     box-sizing: border-box;
 }
+
 input[type="file"]{
     padding: 10px;
     width: 100%;
-    border: 1px solid #FFD1D1;
+    border: 1px solid #295F98;
     border-radius: 5px;
     box-sizing: border-box;
 }
-
-
 
 input[type="radio"] {
     margin-right: 5px;
 }
 
 .submit-btn {
-    background-color: #FF9494;
+    background-color: #295F98;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
-    width: 100%;
     box-sizing: border-box;
-}
-
-.submit-btn:hover {
-    background-color: #FFD1D1;
+    text-align: center; 
 }
 
 .download-btn {
-    background-color: #FF9494;
+    background-color: #295F98;
     color: white;
     border: none;
     border-radius: 5px;
@@ -108,12 +102,15 @@ input[type="radio"] {
     font-weight: bold;
 }
 
-.download-btn:hover {
-    background-color: #FFD1D1;
-}
-
 img {
-    border: 2px solid #FFD1D1;
+    border: 2px solid #295F98;
     border-radius: 10px;
     margin-top: 20px;
+}
+
+/* เพิ่มการจัดวางแบบแนวนอน */
+#position-options, #alignment-options {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* เว้นช่องว่างระหว่างปุ่ม */
 }

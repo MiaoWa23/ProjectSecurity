@@ -1,5 +1,5 @@
 /* ใช้สีพาสเทลตามรูปที่แนบ */
-body {
+/* body {
     background-color: #FFF5E4;
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -8,7 +8,22 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+} */
+body {
+    background-color: #FFF5E4;
+    background-image: url('/static/wave.png');
+    background-size: cover;
+    background-position: center;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
+
+
 
 .container {
     text-align: center;
@@ -20,9 +35,12 @@ body {
 }
 
 h1 {
-    color: #FF9494;
-    font-size: 64px;
-    margin-bottom: 75px;
+    position: absolute;
+    top: 50px;
+    right: 100px;
+    color: #8EACCD;
+    font-size: 120px;
+    margin: 0;
 }
 
 .btn-group {
@@ -32,18 +50,18 @@ h1 {
 
 .btn {
     padding: 15px 30px;
-    font-size: 18px;
-    border: 2px solid #FF9494;
-    background-color: #FFD1D1;
+    font-size: 24px;
+    border: 2px solid #1E2A5E;
+    background-color: #8EACCD;
     border-radius: 10px;
     cursor: pointer;
     color: #333;
     transition: background-color 0.3s, color 0.3s;
-    width: 250px;
-    height: 100px;
+    width: 500px;
+    height: 150px;
 }
 
 .btn:hover {
-    background-color: #FF9494;
+    background-color: #7C93C3;
     color: white;
 }
