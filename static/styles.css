@@ -108,9 +108,8 @@ img {
     margin-top: 20px;
 }
 
-/* เพิ่มการจัดวางแบบแนวนอน */
 #position-options, #alignment-options {
     display: flex;
     justify-content: center;
-    gap: 15px; /* เว้นช่องว่างระหว่างปุ่ม */
+    gap: 15px;
 }

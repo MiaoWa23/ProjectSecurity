@@ -11,26 +11,21 @@
             var alignmentTop = document.getElementById('alignment-top');
             var alignmentBottom = document.getElementById('alignment-bottom');
 
-            // ซ่อนตัวเลือกการจัดวางทั้งหมดก่อน
             alignmentTop.style.display = 'none';
             alignmentBottom.style.display = 'none';
 
-            // ถ้าเลือก Top ให้แสดงตัวเลือก "Left" และ "Right"
             if (position === 'top') {
                 alignmentTop.style.display = 'block';
             }
 
-            // ถ้าเลือก Bottom ให้แสดงตัวเลือก "Left" และ "Right"
             if (position === 'bottom') {
                 alignmentBottom.style.display = 'block';
             }
         }
 
         window.onload = function() {
-            // เรียกใช้งานฟังก์ชัน updateAlignmentOptions เมื่อโหลดหน้า
             updateAlignmentOptions();
 
-            // ถ้าแสดงภาพเรียบร้อยแล้ว ให้เคลียร์ฟอร์ม
             if (document.getElementById("watermarked-image")) {
                 document.getElementById("watermark-form").reset();
             }
@@ -61,7 +56,6 @@
             <input type="text" id="watermark_text" name="watermark_text" required><br><br>
 
             <label>Select Watermark Position</label><br>
-            <!-- <div class="radio-group" style="display: flex; justify-content: space-between; max-width: 300px;"> -->
                     <input type="radio" id="top" name="position" value="top" onclick="updateAlignmentOptions()" required>
                     <label for="top">Top</label>
                     <input type="radio" id="bottom" name="position" value="bottom" onclick="updateAlignmentOptions()" required>
@@ -69,14 +63,6 @@
                     <input type="radio" id="center" name="position" value="center" onclick="updateAlignmentOptions()" required>
                     <label for="center">Center</label>
                 <br><br>
-            <!-- </div><br> -->
-
-            <!-- <div id="alignmen-top" style="display:none;">
-                <label>Select Watermark Position:</label><br>
-                <input type="radio" id="top" name="position" value="top" required> Top
-                <input type="radio" id="bottom" name="position" value="bottom" required> Bottom
-                <input type="radio" id="center" name="position" value="center" required> Center<br><br>
-            </div> -->
 
             <div id="alignment-top" style="display:none;">
                 <label>Select Alignment (Top):</label>
@@ -99,10 +85,8 @@
 
         {% if img_data %}
             <h2>Image with Watermark:</h2>
-            <!-- แสดงภาพที่ประมวลผลในหน่วยความจำ -->
             <img id="watermarked-image" src="data:image/jpeg;base64,{{ img_data }}" alt="Watermarked Image" width="300"><br><br>
 
-            <!-- ปุ่มดาวน์โหลดภาพ -->
             <a href="data:image/jpeg;base64,{{ img_data }}" download="watermarked_image.jpg">
                 <button class="download-btn">Download Image</button>
             </a>

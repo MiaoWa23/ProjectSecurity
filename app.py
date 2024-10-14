@@ -19,7 +19,6 @@ def home():
 @app.route('/add', methods=['GET', 'POST'])
 def upload_image():
     if request.method == 'POST':
-        # แก้ไขจาก 'file' เป็น 'image' ให้ตรงกับ HTML
         if 'image' in request.files and request.files['image'].filename != '':
             file = request.files['image']
 
@@ -34,10 +33,10 @@ def upload_image():
                     image = image.convert('RGBA')
 
                 txt_layer = Image.new('RGBA', image.size, (255, 255, 255, 0))
-
                 draw = ImageDraw.Draw(txt_layer)
                 width, height = image.size
 
+                # ขนาดฟอนต์ของลายน้ำที่ผู้ใช้ป้อน
                 font_size = int(width * 0.10)
                 try:
                     if os.name == 'nt':
@@ -56,13 +55,13 @@ def upload_image():
 
                 margin = 20
                 if position == 'top':
-                    y = margin
+                    y = margin - 35
                     if align == 'left':
                         x = margin
                     else:
                         x = width - text_width - margin
                 elif position == 'bottom':
-                    y = height - text_height - margin * 2.5
+                    y = height - text_height - margin * 2.4
                     if align == 'left':
                         x = margin
                     else:
@@ -76,6 +75,25 @@ def upload_image():
 
                 transparent_color = (255, 255, 255, 120)
                 draw.text((x, y), wrapped_text, fill=transparent_color, font=font)
+
+                source_font_size = font_size // 3
+                source_text = "© 2024 MarkFlow"
+                try:
+                    if os.name == 'nt':
+                        source_font = ImageFont.truetype("C:/Windows/Fonts/Arial.ttf", source_font_size)
+                    else:
+                        source_font = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Black.ttf", source_font_size)
+                except IOError:
+                    source_font = ImageFont.load_default()
+
+                source_bbox = draw.textbbox((0, 0), source_text, font=source_font)
+                source_text_width = source_bbox[2] - source_bbox[0]
+                source_text_height = source_bbox[3] - source_bbox[1]
+
+                source_x = width - source_text_width - margin
+                source_y = height - source_text_height - margin
+
+                draw.text((source_x, source_y), source_text, fill=transparent_color, font=source_font)
 
                 watermarked = Image.alpha_composite(image, txt_layer)
                 watermarked = watermarked.convert('RGB')
