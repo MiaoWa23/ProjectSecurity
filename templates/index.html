@@ -6,9 +6,8 @@
     <title>Add Watermark</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script>
-
-// ฟังก์ชัน updateAlignmentOptions ตรวจสอบตำแหน่งลายน้ำที่ผู้ใช้เลือก (top, bottom, center)
-// และซ่อนหรือแสดงตัวเลือกการจัดตำแหน่ง (align) ให้ตรงกับตำแหน่งลายน้ำที่ผู้ใช้เลือก
+        // ฟังก์ชัน updateAlignmentOptions ตรวจสอบตำแหน่งลายน้ำที่ผู้ใช้เลือก
+        // (top, bottom, center, tiled) และซ่อนหรือแสดงตัวเลือกการจัดตำแหน่ง
         function updateAlignmentOptions() {
             var position = document.querySelector('input[name="position"]:checked') ? document.querySelector('input[name="position"]:checked').value : null;
             var alignmentTop = document.getElementById('alignment-top');
@@ -37,14 +36,13 @@
 </head>
 <body>
   <div class="back-containner">
-
-<!-- ปุ่มback -->
+      <!-- ปุ่ม back -->
       <a href="{{ url_for('home') }}" class="back-button">&lt; Back</a>
   </div>
     <div class="container">
         <h1>Add Watermark</h1>
 
-<!-- ส่วนนี้ใช้แสดงข้อความแจ้งเตือน (errors) -->
+        <!-- แสดงข้อความแจ้งเตือน (errors) -->
         {% with messages = get_flashed_messages() %}
           {% if messages %}
             <ul>
@@ -55,8 +53,7 @@
           {% endif %}
         {% endwith %}
 
-<!-- ฟอร์ม -->
-<!-- ส่งข้อมูลแบบ POST ไปที่เซิร์ฟเวอร์ -->
+        <!-- ฟอร์มอัปโหลดภาพ -->
         <form id="watermark-form" method="POST" enctype="multipart/form-data" class="form-section">
             <input type="file" name="image" accept="image/*" required><br><br>
 
@@ -64,13 +61,12 @@
             <input type="text" id="watermark_text" name="watermark_text" required><br><br>
 
             <label>Select Watermark Position</label><br>
-                    <input type="radio" id="top" name="position" value="top" onclick="updateAlignmentOptions()" required>
-                    <label for="top">Top</label>
-                    <input type="radio" id="bottom" name="position" value="bottom" onclick="updateAlignmentOptions()" required>
-                    <label for="bottom">Bottom</label>
-                    <input type="radio" id="center" name="position" value="center" onclick="updateAlignmentOptions()" required>
-                    <label for="center">Center</label>
-                <br><br>
+            <input type="radio" id="top" name="position" value="top" onclick="updateAlignmentOptions()" required>
+            <label for="top">Top</label>
+            <input type="radio" id="bottom" name="position" value="bottom" onclick="updateAlignmentOptions()" required>
+            <label for="bottom">Bottom</label>
+            <input type="radio" id="center" name="position" value="center" onclick="updateAlignmentOptions()" required>
+            <label for="center">Center</label><br>
 
             <div id="alignment-top" style="display:none;">
                 <label>Select Alignment (Top):</label>
@@ -88,18 +84,23 @@
                 <label for="right-bottom">Right</label>
             </div><br>
 
-  <!-- ปุ่มสำหรับส่งฟอร์มเพื่อเพิ่มลายน้ำในภาพ -->
+            <label for="opacity">Opacity:</label>
+            <select id="opacity" name="opacity">
+                <option value="30">โปร่งมาก</option> <!-- opacity 30 -->
+                <option value="120" selected>พอดี</option> <!-- opacity 120 -->
+                <option value="255">ทึบ</option> <!-- opacity 255 -->
+            </select><br><br>
+
+            <!-- ปุ่มสำหรับส่งฟอร์มเพื่อเพิ่มลายน้ำในภาพ -->
             <input type="submit" value="Add Watermark" class="submit-btn">
         </form>
-<!-- ตรวจสอบว่ามีข้อมูลภาพลายน้ำ (img_data) ที่ได้จาก Flask หรือไม่ -->
+
+        <!-- แสดงภาพลายน้ำที่สร้างแล้ว -->
         {% if img_data %}
             <h2>Image with Watermark:</h2>
-
-<!-- แสดงภาพที่มีลายน้ำโดยใช้ข้อมูลภาพที่ถูกเข้ารหัสเป็น Base64 -->
             <img id="watermarked-image" src="data:image/jpeg;base64,{{ img_data }}" alt="Watermarked Image" width="300"><br><br>
 
             <a href="data:image/jpeg;base64,{{ img_data }}" download="watermarked_image.jpg">
-<!-- ปุ่มสำหรับดาวน์โหลดภาพ -->
                 <button class="download-btn">Download Image</button>
             </a>
         {% endif %}
